@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GameMapScript : MonoBehaviour {
     private static int startIndex = 6;
+
+    private float lastTouchX;
     
     protected static System.Random ran = new System.Random();
     protected static bool handleObject;
@@ -20,7 +22,7 @@ public class GameMapScript : MonoBehaviour {
 
     public static void NextLevel()
     {
-        index = --startIndex;
+        startIndex--;
     }
 
     void Start ()
@@ -32,6 +34,22 @@ public class GameMapScript : MonoBehaviour {
 
 	void Update ()
     {
-        deltaHorizontal = joystick.Horizontal * 2.0f;
+        if (Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+            if (touch.phase == TouchPhase.Began)
+            {
+                lastTouchX = touch.position.x;
+            }
+            else if (touch.phase == TouchPhase.Moved)
+            {
+                deltaHorizontal = touch.position.x - lastTouchX;
+                deltaHorizontal /= -4;
+                lastTouchX = touch.position.x;
+            }
+        }
+        else
+            deltaHorizontal = 0;
+        //deltaHorizontal = joystick.Horizontal * 2.0f;
     }
 }

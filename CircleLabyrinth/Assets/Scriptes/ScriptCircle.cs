@@ -6,23 +6,21 @@ public class ScriptCircle : GameMapScript {
     private const bool objectType = false;
     private float angle = 0;
     private Rigidbody2D rb2d;
+    private bool generated = false;
 
     public int indexInCircle;
     void Start ()
     {
         rb2d = GetComponent<Rigidbody2D>();
-    }
-	
-    void FixedUpdate()
-    {
-        
+        generated = false;
+        rb2d.gameObject.SetActive(true);
     }
 
-	// Update is called once per frame
 	void Update ()
     {
-        if (indexInCircle == index && objectType == handleObject)
+        if (index == indexInCircle && objectType == handleObject)
         {
+            generated = true;
             if (lastCircleAngle == -1)
             {
                 angle = ran.Next(0, 360);
@@ -68,6 +66,8 @@ public class ScriptCircle : GameMapScript {
             lastCircleAngle = angle;
             handleObject = true;
         }
+        if(index > indexInCircle && generated == false)
+            rb2d.gameObject.SetActive(false);
         angle -= deltaHorizontal;
         if (angle > 360)
             angle -= 360;

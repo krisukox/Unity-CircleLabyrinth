@@ -25,7 +25,9 @@ public class MyBallScript : MonoBehaviour {
 
 	void FixedUpdate()
     {
-        if(rb2d.position.y < -5.5)
+        if(rb2d.position.y < Camera.main.transform.position.y - 5.5)
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        //if (rb2d.position.y < -5.5)
+            //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }

@@ -12,6 +12,6 @@ public class MainCameraScript : MonoBehaviour
 	
 	void Update ()
     {
-        transform.position -= new Vector3(0, Time.deltaTime, 0);
+        transform.position -= new Vector3(0, Time.deltaTime/3, 0);
 	}
 }

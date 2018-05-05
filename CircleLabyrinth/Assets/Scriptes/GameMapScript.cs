@@ -11,8 +11,6 @@ public class GameMapScript : MonoBehaviour {
     protected static float deltaHorizontal;
     protected Joystick joystick;
 
-    //protected System.Random ran = new System.Random();
-
     public static void RestartGame()
     {
         index = 0;

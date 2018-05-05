@@ -17,7 +17,7 @@ public class MyBallScript : MonoBehaviour {
 	
     void Update()
     {
-        if (Time.time < 1)
+        if (Time.timeSinceLevelLoad < 0.4f)
             rb2d.bodyType = RigidbodyType2D.Static;
         else
             rb2d.bodyType = RigidbodyType2D.Dynamic;
@@ -27,6 +27,5 @@ public class MyBallScript : MonoBehaviour {
     {
         if(rb2d.position.y < -5.5)
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        //Debug.Log(rb2d.position.y);
     }
 }

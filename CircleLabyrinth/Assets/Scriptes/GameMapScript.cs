@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class GameMapScript : MonoBehaviour {
     private static int startIndex = 6;
-
     private float lastTouchX;
     
     protected static System.Random ran = new System.Random();
@@ -15,9 +14,14 @@ public class GameMapScript : MonoBehaviour {
     protected static float deltaHorizontal;
     protected Joystick joystick;
 
+    public static int Level()
+    {
+        return(7 - startIndex);
+    }
+
     public static void RestartGame()
     {
-        startIndex--;
+        startIndex = 6;
     }
 
     public static void NextLevel()
@@ -30,26 +34,32 @@ public class GameMapScript : MonoBehaviour {
         index = startIndex;
         handleObject = false;
         joystick = FindObjectOfType<Joystick>();
+        if (Application.platform == RuntimePlatform.Android)
+            joystick.gameObject.SetActive(false);
     }
 
 	void Update ()
     {
-        if (Input.touchCount > 0)
+        if(Application.platform == RuntimePlatform.Android)
         {
-            Touch touch = Input.GetTouch(0);
-            if (touch.phase == TouchPhase.Began)
+            if (Input.touchCount > 0)
             {
-                lastTouchX = touch.position.x;
+                Touch touch = Input.GetTouch(0);
+                if (touch.phase == TouchPhase.Began)
+                {
+                    lastTouchX = touch.position.x;
+                }
+                else if (touch.phase == TouchPhase.Moved)
+                {
+                    deltaHorizontal = touch.position.x - lastTouchX;
+                    deltaHorizontal /= -4;
+                    lastTouchX = touch.position.x;
+                }
             }
-            else if (touch.phase == TouchPhase.Moved)
-            {
-                deltaHorizontal = touch.position.x - lastTouchX;
-                deltaHorizontal /= -4;
-                lastTouchX = touch.position.x;
-            }
+            else
+                deltaHorizontal = 0;
         }
         else
-            deltaHorizontal = 0;
-        //deltaHorizontal = joystick.Horizontal * 2.0f;
+            deltaHorizontal = joystick.Horizontal * 2.0f;
     }
 }

@@ -25,9 +25,11 @@ public class MyBallScript : MonoBehaviour {
 
 	void FixedUpdate()
     {
-        if(rb2d.position.y < Camera.main.transform.position.y - 5.5)
+        if (rb2d.position.y < Camera.main.transform.position.y - 5.5 && GameMapScript.Level() == 7)
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 3);
+        else if (rb2d.position.y < Camera.main.transform.position.y - 5.5)
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        //if (rb2d.position.y < -5.5)
-            //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        else if(rb2d.position.y > Camera.main.transform.position.y + 6)
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 2);
     }
 }
